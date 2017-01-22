@@ -106,22 +106,24 @@ class Base(object):
         """ Move forward a single entry in the browser's history. """
         raise NotImplementedError()
 
-    def execute_script(self, script):
+    def execute_script(self, script, *args):
         """
         Executes the given script.
 
         Args:
             script (str): A JavaScript string to execute.
+            *args: Optional arguments that will be passed to the script.
         """
 
         raise NotImplementedError()
 
-    def evaluate_script(self, script):
+    def evaluate_script(self, script, *args):
         """
         Evaluates and returns the result of the given JavaScript.
 
         Args:
             script (str): A string of JavaScript to evaluate.
+            *args: Optional arguments that will be passed to the script.
 
         Returns:
             object: The result of the evaluated JavaScript.

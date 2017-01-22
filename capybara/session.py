@@ -381,7 +381,7 @@ class Session(SessionMatchersMixin, object):
 
         return get_new_window()
 
-    def execute_script(self, script):
+    def execute_script(self, script, *args):
         """
         Execute the given script, not returning a result. This is useful for scripts that return
         complex objects, such as jQuery statements. ``execute_script`` should be used over
@@ -389,11 +389,14 @@ class Session(SessionMatchersMixin, object):
 
         Args:
             script (str): A string of JavaScript to execute.
+            *args: Optional arguments that will be passed to the script.
         """
 
-        self.driver.execute_script(script)
+        self.driver.execute_script(
+            script,
+            *[arg.native if isinstance(arg, Element) else arg for arg in args])
 
-    def evaluate_script(self, script):
+    def evaluate_script(self, script, *args):
         """
         Evaluate the given JavaScript and return the result. Be careful when using this with
         scripts that return complex objects, such as jQuery statements. :meth:`execute_script`
@@ -401,12 +404,15 @@ class Session(SessionMatchersMixin, object):
 
         Args:
             script (str): A string of JavaScript to evaluate.
+            *args: Optional arguments that will be passed to the script.
 
         Returns:
             object: The result of the evaluated JavaScript (may be driver specific).
         """
 
-        return self.driver.evaluate_script(script)
+        return self.driver.evaluate_script(
+            script,
+            *[arg.native if isinstance(arg, Element) else arg for arg in args])
 
     @contextmanager
     def accept_alert(self, text=None, wait=None):
