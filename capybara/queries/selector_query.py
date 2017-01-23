@@ -38,8 +38,9 @@ class SelectorQuery(object):
         **filter_options: Arbitrary keyword arguments for the selector's filters.
     """
 
-    def __init__(self, selector, locator=None, between=None, count=None, exact=None, match=None,
-                 maximum=None, minimum=None, text=None, visible=None, wait=None, **filter_options):
+    def __init__(self, selector, locator=None, between=None, count=None, exact=None,
+                 exact_text=None, match=None, maximum=None, minimum=None, text=None, visible=None,
+                 wait=None, **filter_options):
         if locator is None and selector not in selectors:
             locator = selector
             selector = capybara.default_selector
@@ -51,6 +52,7 @@ class SelectorQuery(object):
             "between": between,
             "count": count,
             "exact": exact,
+            "exact_text": exact_text,
             "match": match,
             "maximum": maximum,
             "minimum": minimum,
@@ -104,6 +106,10 @@ class SelectorQuery(object):
             return self.options["exact"]
         else:
             return capybara.exact
+
+    @property
+    def exact_text(self):
+        return self.options["exact_text"]
 
     @property
     def match(self):
